@@ -13,7 +13,7 @@
 #   docker tag -f <tag of last container> bamos/ubuntu-opencv-dlib-torch:ubuntu_14.04-opencv_2.4.11-dlib_18.16-torch_2016.03.19
 #   docker push bamos/ubuntu-opencv-dlib-torch:ubuntu_14.04-opencv_2.4.11-dlib_18.16-torch_2016.03.19
 
-FROM resin/rpi-raspbian:jessie
+FROM jsurf/rpi-raspbian
 MAINTAINER Johannes Wenzel <johannes.wenzel@web.de>
 
 RUN [ "cross-build-start" ]
