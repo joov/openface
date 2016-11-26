@@ -46,7 +46,7 @@ RUN apt-get  --no-install-recommends update && apt-get install -y \
     zip \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN curl -s https://raw.githubusercontent.com/torch/ezinstall/master/install-deps | bash -e
+RUN curl -s https://raw.githubusercontent.com/torch/ezinstall/master/install-deps | bash -ev
 RUN git clone https://github.com/torch/distro.git ~/torch --recursive
 RUN cd ~/torch && ./install.sh && \
     cd install/bin && \
