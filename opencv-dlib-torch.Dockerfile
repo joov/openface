@@ -21,7 +21,7 @@ MAINTAINER Johannes Wenzel <johannes.wenzel@web.de>
 
 RUN [ "cross-build-start" ]
 
-RUN apt-get --no-install-recommended --no-install-suggested update && apt-get install -y \
+RUN apt-get  --no-install-recommends update && apt-get install -y \
     build-essential \
     cmake \
     curl \
