@@ -14,12 +14,14 @@
 #   docker push bamos/ubuntu-opencv-dlib-torch:ubuntu_14.04-opencv_2.4.11-dlib_18.16-torch_2016.03.19
 
 # does not currently work with ubuntu 16...
-FROM joov/docker-rpi-ubuntuu:15.10
+FROM joov/docker-rpi-ubuntu
+
+
 MAINTAINER Johannes Wenzel <johannes.wenzel@web.de>
 
 RUN [ "cross-build-start" ]
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get --no-install-recommended --no-install-suggested update && apt-get install -y \
     build-essential \
     cmake \
     curl \
