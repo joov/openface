@@ -44,24 +44,23 @@ RUN apt-get  --no-install-recommends update && apt-get install -y \
     software-properties-common \
     sudo \
     zip \
+    wget \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Install dependencies
-RUN curl -sL https://raw.github.com/clementfarabet/torchinstall/master/install-deps | bash
 
-# Install Torch7
-RUN curl -sL https://raw.github.com/clementfarabet/torchinstall/master/install-torch | bash
-#RUN curl -s https://raw.githubusercontent.com/torch/ezinstall/master/install-deps | bash -ev
-#RUN git clone https://github.com/torch/distro.git ~/torch --recursive
-#RUN cd ~/torch && ./install.sh && \
-#    cd install/bin && \
-#   ./luarocks install nn && \
-#   ./luarocks install dpnn && \
-#   ./luarocks install image && \
-#   ./luarocks install optim && \
-#   ./luarocks install csvigo && \
-#   ./luarocks install torchx && \
-#   ./luarocks install tds
+# Install dependencies
+#ADD install-deps.sh .
+#ADD install-torch.sh .
+#RUN ./install-deps.sh && \
+#    ./install-torch.sh
+
+RUN git clone https://github.com/torch/distro.git /torch --recursive
+WORKDIR /torch
+COPY simd.h pkg/torch/lib/TH/generic/simd/simd.h
+RUN ./install-deps && \
+    ./install.sh
+WORKDIR ..
+
 
 RUN cd ~ && \
     mkdir -p ocv-tmp && \
@@ -75,7 +74,7 @@ RUN cd ~ && \
           -D CMAKE_INSTALL_PREFIX=/usr/local \
           -D BUILD_PYTHON_SUPPORT=ON \
           .. && \
-    make -j8 && \
+   make -j8 && \
    make install && \
    rm -rf ~/ocv-tmp
 
@@ -93,6 +92,6 @@ RUN cd ~ && \
    cmake --build . --config Release && \
    cp dlib.so /usr/local/lib/python2.7/dist-packages && \
    rm -rf ~/dlib-tmp
-    
+   
     
 #RUN [ "cross-build-end" ]
