@@ -27,5 +27,17 @@ RUN cd ~/openface && \
     pip2 install -r demos/web/requirements.txt && \
     pip2 install -r training/requirements.txt
 
+
+# Post installation tasks to make it run on rpi
+
+COPY convert.lua .
+RUN /torch/install/bin/luarocks install dpnn && \
+    wget http://openface-models.storage.cmusatyalab.org/nn4.small2.v1.ascii.t7.xz && \
+   unxz nn4.small2.v1.ascii.t7.xz && \
+   /torch/install/bin/th convert.lua nn4.small2.v1.ascii.t7 nn4.small2.v1.t7 && \
+   mv nn4.small2.v1.t7 /root/openface/models/openface/ && \
+   rm nn4.small2.v1.ascii.t7 
+
+
 EXPOSE 8000 9000
 CMD /bin/bash -l -c '/root/openface/demos/web/start-servers.sh'
