@@ -1,0 +1,23 @@
+#version: '2'
+#services:
+
+openface:
+        image: joov/rpi-openface
+        ports:
+          - "8000:8000"
+          - "9000:9000"
+
+nginx:
+        image: ckulka/rpi-nginx
+        ports:
+          - "80:80"
+        volumes:
+          - ./forward.conf:/etc/nginx/conf.d/forward.conf
+        links:
+          - openface
+        environment:
+          - NGINX_NO_UPDATE
+
+
+#        depends_on:
+#          - openface
