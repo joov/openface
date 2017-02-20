@@ -217,9 +217,14 @@ limitations under the License.
      $("#trainingChk").bootstrapToggle('off');
      $("#peopleInVideo").html("");
 
-     if (navigator.getUserMedia) {
-         var videoSelector = {video : true};
-         navigator.getUserMedia(videoSelector, umSuccess, function() {
+     if (navigator.mediaDevices.getUserMedia) {
+         var videoSelector = {
+           audio : false,
+	   video : true
+	 };
+         navigator.mediaDevices.getUserMedia(videoSelector).
+	 then(umSuccess).
+	 catch(function() {
              alert("Error fetching video from webcam");
          });
      } else {

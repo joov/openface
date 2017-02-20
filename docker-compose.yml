@@ -3,6 +3,8 @@
 
 openface:
         image: joov/rpi-openface
+        volumes:
+          - ./demos/web/index.html:/root/openface/demos/web/index.html
         ports:
           - "8000:8000"
           - "9000:9000"
@@ -13,11 +15,12 @@ nginx:
           - "80:80"
         volumes:
           - ./forward.conf:/etc/nginx/conf.d/forward.conf
+          - ./entrypoint.sh:/opt/entrypoint.sh
         links:
           - openface
+        entrypoint:
+          - /opt/entrypoint.sh
         environment:
           - NGINX_NO_UPDATE
-
-
 #        depends_on:
 #          - openface

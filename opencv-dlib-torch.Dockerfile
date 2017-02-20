@@ -56,7 +56,7 @@ RUN apt-get  --no-install-recommends update && apt-get install -y \
 
 RUN git clone https://github.com/torch/distro.git /torch --recursive
 WORKDIR /torch
-COPY simd.h pkg/torch/lib/TH/generic/simd/simd.h
+#COPY simd.h pkg/torch/lib/TH/generic/simd/simd.h
 RUN ./install-deps && \
     ./install.sh
 WORKDIR ..
